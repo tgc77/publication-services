@@ -1,0 +1,44 @@
+services:
+    redis:
+        image: redis:6.2.2-alpine
+        command: ['redis-server', '--appendonly', 'yes']
+        hostname: redis
+        volumes:
+            - redis-data:/data
+
+    rabbit:
+        image: rabbitmq:3-management
+        ports:
+            - '15672:15672'
+
+    services:
+        build:
+            context: services
+        depends_on:
+            - rabbit
+        environment:
+            REDIS_HOST: 'redis'
+            REDIS_PORT: '6379'
+            RABBIT_PASSWORD: 'guest'
+            RABBIT_USER: 'guest'
+            RABBIT_HOST: 'rabbit'
+            RABBIT_PORT: '5672'
+
+    client:
+        build:
+            context: client
+        depends_on:
+            - rabbit
+            - services
+        ports:
+            - '5000:5000'
+        environment:
+            REDIS_HOST: 'redis'
+            REDIS_PORT: '6379'
+            RABBIT_PASSWORD: 'guest'
+            RABBIT_USER: 'guest'
+            RABBIT_HOST: 'rabbit'
+            RABBIT_PORT: '5672'
+
+volumes:
+    redis-data:

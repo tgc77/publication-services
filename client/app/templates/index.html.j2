@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ title }}</title>
+    </head>
+    <body>
+        <div>
+            Options:
+            <a href="{{ url_for('app.index') }}">New Publications</a> | 
+            <a href="{{ url_for('app.history') }}">Publication History</a>
+        </div>
+        <hr>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+
+        <div>
+            <h1>New publications incoming:</h1>
+            <ul id="publications"></ul>
+        </div>
+
+    </body>
+    <script src="https://cdn.socket.io/3.1.3/socket.io.min.js" integrity="sha384-cPwlPLvBTa3sKAgddT6krw0cJat7egBga3DJepJyrLl4Q9/5WLra3rrnMcyTyOnh" crossorigin="anonymous"></script>
+    <script>
+        var socket = io('localhost:5000')
+
+        socket.on('connect', () => {
+            console.log('Successfully connected to server!');
+            socket.emit('request_publication')
+        })
+
+        socket.on('reset_data', () => {
+            var publication = document.getElementById('publications');
+            publication.innerHTML = ''
+        })
+
+        socket.on('new_publication', (data) => {
+            addPublication(data);
+        })
+
+        setInterval(() => {
+            socket.emit('request_publication')
+        }, 700)
+
+        var addPublication = (data) => {
+                var text = document.createTextNode(data),
+                    el = document.createElement('li'),
+                    publication = document.getElementById('publications');
+
+                el.appendChild(text);
+                publication.appendChild(el);
+        }
+    </script>
+</html>

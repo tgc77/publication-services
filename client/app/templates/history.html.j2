@@ -1,0 +1,11 @@
+{% extends "index.html.j2" %}
+
+{% block content %}
+    {% if history %}
+    <h1>History of last 100 published numbers:</h1>
+    {% for number in history %}
+        <div><strong>{{ number }}</strong></div>
+        <hr />
+    {% endfor %}
+    {% endif %}
+{% endblock %}
