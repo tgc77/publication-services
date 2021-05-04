@@ -6,8 +6,7 @@ ENV FLASK_APP=app.py
 ENV FLASK_RUN_HOST=0.0.0.0
 COPY requirements.txt ./
 RUN /usr/local/bin/python -m pip install --upgrade pip
-RUN pip install --no-cache-dir -r requirements.txt
-COPY config.yml ./
+RUN pip install -r requirements.txt
 COPY run.sh ./
 COPY app.py ./
 RUN mkdir -p ./app

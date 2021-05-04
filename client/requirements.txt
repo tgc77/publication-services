@@ -9,7 +9,6 @@ dnspython==1.16.0
 eventlet==0.30.2
 flasgger==0.9.5
 Flask==1.1.2
-flask-nameko==1.4.0
 flask-redis==0.4.0
 Flask-SocketIO==5.0.1
 greenlet==1.0.0
@@ -21,6 +20,7 @@ kombu==4.6.11
 MarkupSafe==1.1.1
 mistune==0.8.4
 mock==4.0.3
+nameko==2.13.0
 path==15.1.2
 path.py==12.5.0
 pycodestyle==2.7.0
