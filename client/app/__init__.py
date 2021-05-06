@@ -1,5 +1,4 @@
 from flask import Flask, Blueprint
-# from flasgger import Swagger, swag_from
 from nameko.standalone.rpc import ServiceRpcProxy
 from flask_socketio import SocketIO
 from flask_redis import FlaskRedis
@@ -11,7 +10,6 @@ bp = Blueprint('app', __name__)
 socket = SocketIO()
 redis_client = FlaskRedis(decode_responses=True, charset='utf-8')
 client_consumer = ClientConsumer(max_size=20)
-# swgg = Swagger()
 
 
 def rpc_proxy() -> ServiceRpcProxy:
@@ -21,7 +19,7 @@ def rpc_proxy() -> ServiceRpcProxy:
     Returns:
         ServiceRpcProxy: Service RPC Proxy connector.
     """
-    return ServiceRpcProxy(Config.SERVICE_NAME, Config.SERVICE_CONFIG)
+    return ServiceRpcProxy(Config.SERVICE_PROVIDER, Config.SERVICE_CONFIG)
 
 
 def create_app(config_class=Config) -> Flask:
@@ -37,7 +35,6 @@ def create_app(config_class=Config) -> Flask:
         socket (SocketIO): Websocket to receive real-time data incoming from service.
         redis_client (FlaskRedis): Flask Redis connector object.
         client_consumer (ClientConsumer): Microservice client connector.
-        swgg (Swagger): Flask Swagger API documentaion.
     Returns:
         [Flask]: Flask app instance
     """

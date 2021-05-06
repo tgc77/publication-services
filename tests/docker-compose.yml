@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+    redis:
+        image: redis:6.2.2-alpine
+        restart: on-failure
+        command: ['redis-server', '--appendonly', 'yes']
+        ports:
+            - '6379:6379'
+        volumes:
+            - redis-data:/data
+
+    rabbit:
+        image: rabbitmq:3-management
+        restart: on-failure
+        hostname: rabbit
+        ports:
+            - '5672:5672'
+            - '15672:15672'
+volumes:
+    redis-data:

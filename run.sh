@@ -1,4 +1,4 @@
 #!/bin/bash
 set -x
 
-docker-compose up
+docker compose up

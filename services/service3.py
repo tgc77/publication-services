@@ -35,13 +35,14 @@ class Service3:
         """
         self._dispatch('number_published', payload)
 
-    @timer(interval=0.5)
     @rpc
+    @timer(interval=0.5)
     def request_numbers(self):
         """
         Requests numbers each 500ms interval from service1 and service2 and
         apply some rule to be processed.
         """
+        # Initialize parameters to be able to use into try block.
         even_number = -1
         odd_number = -1
         try:

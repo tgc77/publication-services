@@ -13,8 +13,8 @@ services:
         restart: on-failure
         hostname: rabbit
         ports:
+            - '5672:5672'
             - '15672:15672'
-
     services:
         build:
             context: services

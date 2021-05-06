@@ -54,7 +54,6 @@ def history():
             return render_template('history.html.j2',
                                    title='BYNE Test - History Result', history=history)
     except Exception as e:
-        print('Ooops! ', e)
         flash(f'Ooops! {e}', category='error')
     return render_template('history.html.j2',
                            title='BYNE Test - History Result')
